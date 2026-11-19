@@ -1,0 +1,152 @@
+---
+// Typographic index of all expeditions. On pointer devices, hovering a row
+// summons a floating photo that trails the cursor (classic awwwards pattern).
+import { packages } from "../data/packages";
+
+const preview = (img: string) => img.replace("w=1400", "w=640");
+---
+
+<section class="index section-pad" aria-label="Expedition index" data-index>
+  <header class="index-head">
+    <p class="label index-kicker reveal">Quick index</p>
+    <h2 class="index-title serif reveal">Every journey, <em>at a glance</em></h2>
+  </header>
+
+  <div class="index-list">
+    {
+      packages.map((pkg, i) => (
+        <a href="#" class="index-row" data-index-row={i}>
+          <span class="index-num label">{String(i + 1).padStart(2, "0")}</span>
+          <span class="index-name serif">
+            {pkg.country}
+            <em> — {pkg.title}</em>
+          </span>
+          <span class="index-dates label">{pkg.dates}</span>
+          <span class="index-price">{pkg.price}</span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="index-preview" data-index-preview aria-hidden="true">
+    {
+      packages.map((pkg, i) => (
+        <img src={preview(pkg.image)} alt="" data-preview-img={i} loading="lazy" />
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .index {
+    position: relative;
+    padding-block: clamp(4rem, 10vh, 8rem);
+  }
+
+  .index-kicker {
+    color: var(--terracotta);
+    margin-bottom: 1.2rem;
+  }
+
+  .index-title {
+    font-size: clamp(2rem, 4.4vw, 3.6rem);
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .index-title em {
+    font-style: italic;
+    font-weight: 320;
+    color: var(--terracotta);
+  }
+
+  .index-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto auto;
+    align-items: baseline;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-block: 1.4rem;
+    border-top: 1px solid var(--line);
+    transition: padding-left 0.4s var(--ease-out);
+  }
+
+  .index-row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .index-row:hover {
+    padding-left: 0.9rem;
+  }
+
+  .index-num {
+    color: var(--ink-soft);
+  }
+
+  .index-name {
+    font-size: clamp(1.25rem, 2.4vw, 1.9rem);
+    line-height: 1.15;
+    transition: color 0.3s var(--ease-out);
+  }
+
+  .index-name em {
+    font-style: italic;
+    font-weight: 320;
+    color: var(--ink-soft);
+    transition: color 0.3s var(--ease-out);
+  }
+
+  .index-row:hover .index-name,
+  .index-row:hover .index-name em {
+    color: var(--terracotta);
+  }
+
+  .index-dates {
+    color: var(--ink-soft);
+  }
+
+  .index-price {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  /* Floating photo that trails the cursor — driven from animations.ts */
+  .index-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16.5rem;
+    height: 21rem;
+    pointer-events: none;
+    opacity: 0;
+    overflow: hidden;
+    z-index: 5;
+  }
+
+  .index-preview img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .index-preview img.active {
+    opacity: 1;
+  }
+
+  @media (max-width: 760px) {
+    .index-row {
+      grid-template-columns: 2rem 1fr;
+    }
+    .index-dates {
+      grid-column: 2;
+    }
+    .index-price {
+      grid-column: 2;
+    }
+    .index-preview {
+      display: none;
+    }
+  }
+</style>

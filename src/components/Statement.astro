@@ -1,0 +1,35 @@
+---
+// The "breath" between hero and packages: one editorial line, revealed word by word.
+---
+
+<section class="statement section-pad" aria-label="Our approach">
+  <p class="statement-kicker label reveal">A different way to travel</p>
+  <p class="statement-line serif" data-split-words>
+    We travel slowly, in small groups, guided by the people who call each place
+    home — not to see the world, but to understand it.
+  </p>
+</section>
+
+<style>
+  .statement {
+    padding-block: clamp(6rem, 14vh, 10rem);
+    max-width: 68rem;
+  }
+
+  .statement-kicker {
+    color: var(--terracotta);
+    margin-bottom: 1.6rem;
+  }
+
+  .statement-line {
+    font-size: clamp(1.75rem, 3.6vw, 3.1rem);
+    line-height: 1.22;
+    letter-spacing: -0.005em;
+    max-width: 26ch;
+  }
+
+  /* Word spans injected by animations.ts */
+  .statement-line :global(.w) {
+    display: inline-block;
+  }
+</style>

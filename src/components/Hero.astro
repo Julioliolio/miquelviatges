@@ -1,0 +1,207 @@
+---
+import { heroImages } from "../data/packages";
+
+const brand = "TRAMUNTANA";
+---
+
+<section class="hero" id="top" aria-label="Introduction">
+  <div class="hero-frame" data-hero-frame>
+    <div class="hero-media" aria-hidden="true">
+    {
+      heroImages.map((img, i) => (
+        <div class={`hero-slide${i === 0 ? " active" : ""}`}>
+          <img src={img.image} alt="" loading={i === 0 ? "eager" : "lazy"} />
+        </div>
+      ))
+    }
+    <div class="hero-scrim"></div>
+  </div>
+
+  <div class="hero-content section-pad">
+    <p class="hero-tag serif">
+      Immersive journeys to places<br />that don&rsquo;t fit on postcards.
+    </p>
+    <a class="hero-cta label" href="#expeditions" data-magnetic>
+      See the expeditions
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M7 1v11M2.5 7.5 7 12l4.5-4.5" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </a>
+  </div>
+
+    <div class="scroll-cue" aria-hidden="true"></div>
+  </div>
+
+  <h1 class="hero-wordmark serif" aria-label="Tramuntana" data-hero-wordmark>
+    {brand.split("").map((letter) => <span aria-hidden="true">{letter}</span>)}
+  </h1>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 34rem;
+    background: var(--cream);
+  }
+
+  /* The "postcard": GSAP scales this down and rounds its corners on scroll. */
+  .hero-frame {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: var(--cream);
+    overflow: clip;
+    box-shadow: 0 30px 80px rgba(22, 20, 18, 0.28);
+    will-change: transform;
+  }
+
+  .hero-media,
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-slide {
+    opacity: 0;
+    transition: opacity 1.6s ease;
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+  }
+
+  /* Slow Ken Burns drift on the visible slide */
+  .hero-slide.active img {
+    animation: kenburns 14s ease-out forwards;
+  }
+
+  @keyframes kenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.08);
+    }
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(22, 20, 18, 0.35), transparent 32%),
+      linear-gradient(to top, rgba(22, 20, 18, 0.62), transparent 55%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    margin-bottom: clamp(1rem, 3vh, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.4rem;
+  }
+
+  .hero-tag {
+    font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+    line-height: 1.18;
+    text-wrap: balance;
+    max-width: 22ch;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.4rem;
+    border: 1px solid rgba(240, 239, 233, 0.6);
+    border-radius: 999px;
+    transition:
+      background-color 0.35s var(--ease-out),
+      color 0.35s var(--ease-out),
+      border-color 0.35s var(--ease-out);
+  }
+
+  .hero-cta svg {
+    transition: transform 0.35s var(--ease-out);
+  }
+
+  .hero-cta:hover {
+    background: var(--cream);
+    border-color: var(--cream);
+    color: var(--ink);
+  }
+
+  .hero-cta:hover svg {
+    transform: translateY(3px);
+  }
+
+  /* Edge-to-edge letterspread wordmark, à la Tierra Ignota.
+     Sits outside the postcard frame so GSAP can fly it up into the nav
+     as the hero shrinks (wordmark-morph transition). Above the nav bar. */
+  .hero-wordmark {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.06em;
+    z-index: 60;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-inline: 0.04em;
+    font-size: clamp(3rem, 11.5vw, 12.5rem);
+    font-weight: 340;
+    line-height: 0.92;
+    color: var(--cream);
+    user-select: none;
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  .scroll-cue {
+    position: absolute;
+    right: clamp(1.25rem, 4vw, 3.5rem);
+    top: 50%;
+    z-index: 2;
+    width: 1px;
+    height: 3.5rem;
+    background: rgba(240, 239, 233, 0.55);
+    overflow: hidden;
+  }
+
+  .scroll-cue::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--cream);
+    animation: cue 2.2s var(--ease-out) infinite;
+  }
+
+  @keyframes cue {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-tag {
+      font-size: 1.35rem;
+    }
+    .scroll-cue {
+      display: none;
+    }
+  }
+</style>

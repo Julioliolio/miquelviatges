@@ -1,0 +1,80 @@
+---
+import PackageCard from "./PackageCard.astro";
+import { packages } from "../data/packages";
+---
+
+<section class="packages section-pad" id="expeditions" aria-label="Upcoming expeditions">
+  <header class="packages-head">
+    <h2 class="packages-title serif reveal">Upcoming<br /><em>expeditions</em></h2>
+    <p class="packages-note label reveal">{packages.length} journeys · 2026 — 2027</p>
+  </header>
+
+  <div class="packages-grid">
+    {
+      packages.map((pkg) => (
+        <div class="packages-cell">
+          <PackageCard pkg={pkg} />
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .packages {
+    padding-block: clamp(2rem, 6vh, 5rem) clamp(5rem, 12vh, 9rem);
+  }
+
+  .packages-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+  }
+
+  .packages-title {
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    line-height: 0.98;
+  }
+
+  .packages-title em {
+    font-style: italic;
+    font-weight: 320;
+    color: var(--terracotta);
+  }
+
+  .packages-note {
+    color: var(--ink-soft);
+    padding-bottom: 0.6rem;
+    white-space: nowrap;
+  }
+
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: clamp(1.5rem, 4vw, 4rem);
+    row-gap: clamp(3rem, 7vh, 5.5rem);
+  }
+
+  /* Asymmetric editorial rhythm: right column rides lower than the left. */
+  @media (min-width: 761px) {
+    .packages-cell:nth-child(even) {
+      transform: translateY(clamp(2rem, 6vh, 5rem));
+    }
+    .packages {
+      padding-bottom: calc(clamp(5rem, 12vh, 9rem) + clamp(2rem, 6vh, 5rem));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .packages-grid {
+      grid-template-columns: 1fr;
+    }
+    .packages-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,100 @@
+---
+// Sticky nav: transparent over the hero, cream + hairline once scrolled.
+---
+
+<header class="nav" id="site-nav">
+  <nav class="nav-inner section-pad">
+    <a href="#expeditions" class="label nav-link">Expeditions</a>
+    <a href="#top" class="wordmark serif" aria-label="Tramuntana — home" data-nav-wordmark>Tramuntana</a>
+    <div class="nav-right">
+      <a href="#philosophy" class="label nav-link">The project</a>
+      <span class="label lang" aria-hidden="true">EN</span>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    color: var(--cream);
+    transition:
+      background-color 0.4s var(--ease-out),
+      color 0.4s var(--ease-out),
+      box-shadow 0.4s var(--ease-out);
+  }
+
+  .nav.scrolled {
+    background: color-mix(in srgb, var(--cream) 92%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color: var(--ink);
+    box-shadow: inset 0 -1px 0 var(--line);
+  }
+
+  .nav-inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 3.75rem;
+  }
+
+  .wordmark {
+    grid-column: 2;
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-right {
+    grid-column: 3;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    grid-column: 1;
+    position: relative;
+    justify-self: start;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.35s var(--ease-out);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .lang {
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0.2rem 0.55rem;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 640px) {
+    .nav-link {
+      display: none;
+    }
+    .lang {
+      font-size: 0.625rem;
+    }
+    .wordmark {
+      font-size: 1.15rem;
+    }
+  }
+</style>

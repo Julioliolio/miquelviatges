@@ -1,0 +1,200 @@
+---
+// Dark closing band: newsletter mock + footer meta.
+---
+
+<footer class="footer" aria-label="Newsletter and site information">
+  <div class="footer-inner section-pad">
+    <div class="footer-news">
+      <h2 class="footer-title serif">
+        Hear about the next<br /><em>expedition first.</em>
+      </h2>
+      <form class="footer-form" data-newsletter>
+        <div class="footer-field">
+          <input
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            aria-label="Email address"
+            required
+          />
+          <button type="submit" class="label" data-magnetic>Join</button>
+        </div>
+        <label class="footer-consent">
+          <input type="checkbox" required />
+          <span>I have read and accept the <a href="#">privacy policy</a></span>
+        </label>
+        <p class="footer-thanks label" hidden>Thank you — talk soon.</p>
+      </form>
+    </div>
+
+    <div class="footer-meta">
+      <div class="footer-col">
+        <p class="label footer-head">Follow us</p>
+        <a href="#" class="footer-link">Instagram</a>
+        <a href="#" class="footer-link">YouTube</a>
+        <a href="#" class="footer-link">TikTok</a>
+      </div>
+      <div class="footer-col">
+        <p class="label footer-head">Questions?</p>
+        <a href="#" class="footer-link">Frequently asked questions</a>
+        <a href="mailto:hello@example.com" class="footer-link">hello@example.com</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-legal section-pad label">
+    <span>Tramuntana Expedicions S.L.</span>
+    <span>©2026 · All rights reserved</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(3rem, 6vw, 6rem);
+    padding-block: clamp(4.5rem, 10vh, 7.5rem);
+  }
+
+  .footer-title {
+    font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+    line-height: 1.02;
+    margin-bottom: 2.25rem;
+  }
+
+  .footer-title em {
+    font-style: italic;
+    font-weight: 320;
+    color: var(--terracotta);
+  }
+
+  .footer-field {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(240, 239, 233, 0.35);
+    max-width: 26rem;
+    transition: border-color 0.3s var(--ease-out);
+  }
+
+  .footer-field:focus-within {
+    border-color: var(--cream);
+  }
+
+  .footer-field input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--cream);
+    font: inherit;
+    padding: 0.8rem 0;
+    outline: none;
+  }
+
+  .footer-field input::placeholder {
+    color: rgba(240, 239, 233, 0.45);
+  }
+
+  .footer-field button {
+    color: var(--cream);
+    padding: 0.5rem 0;
+    transition: color 0.3s var(--ease-out);
+  }
+
+  .footer-field button:hover {
+    color: var(--terracotta);
+  }
+
+  .footer-consent {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    color: rgba(240, 239, 233, 0.65);
+  }
+
+  .footer-consent a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .footer-consent input {
+    accent-color: var(--terracotta);
+  }
+
+  .footer-thanks {
+    margin-top: 1rem;
+    color: var(--terracotta);
+  }
+
+  .footer-meta {
+    display: flex;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-content: start;
+  }
+
+  .footer-head {
+    color: rgba(240, 239, 233, 0.5);
+    margin-bottom: 1.1rem;
+  }
+
+  .footer-link {
+    display: block;
+    padding-block: 0.28rem;
+    width: fit-content;
+    position: relative;
+  }
+
+  .footer-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.35s var(--ease-out);
+  }
+
+  .footer-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .footer-legal {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.4rem;
+    border-top: 1px solid rgba(240, 239, 233, 0.16);
+    color: rgba(240, 239, 233, 0.55);
+  }
+
+  @media (max-width: 760px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+    }
+    .footer-legal {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  }
+</style>
+
+<script>
+  // Newsletter is a visual mock for now — acknowledge without sending anywhere.
+  const form = document.querySelector<HTMLFormElement>("[data-newsletter]");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    form.querySelector<HTMLElement>(".footer-thanks")?.removeAttribute("hidden");
+    form.querySelector<HTMLInputElement>("input[type=email]")!.value = "";
+  });
+</script>
