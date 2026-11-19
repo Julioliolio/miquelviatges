@@ -2,22 +2,29 @@
 // Horizontal expanding-card deck: hovered photo widens, siblings compress.
 // On touch screens it becomes a snap-scrolling strip.
 import { Image } from "astro:assets";
-import { trips } from "../data/trips";
+import { getTrips } from "../data/trips";
+import { useT, type Locale } from "../i18n/ui";
 
-const [palau, indonesia, honduras, philippines] = trips;
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useT(locale);
+const [palau, indonesia, honduras, philippines] = getTrips(locale);
 const shots = [
-  { photo: palau.stages[2].photo, caption: "Golden jellyfish" },
-  { photo: indonesia.stages[0].photo, caption: "Bornean orangutan" },
-  { photo: honduras.stages[1].photo, caption: "Whale shark" },
-  { photo: philippines.stages[1].photo, caption: "Philippine tarsier" },
-  { photo: indonesia.stages[2].photo, caption: "Komodo dragon" },
+  { photo: palau.stages[2].photo, caption: t("gallery.jellyfish") },
+  { photo: indonesia.stages[0].photo, caption: t("gallery.orangutan") },
+  { photo: honduras.stages[1].photo, caption: t("gallery.whaleshark") },
+  { photo: philippines.stages[1].photo, caption: t("gallery.tarsier") },
+  { photo: indonesia.stages[2].photo, caption: t("gallery.komodo") },
 ];
 ---
 
-<section class="gallery" aria-label="Wildlife of our expeditions">
+<section class="gallery" aria-label={t("gallery.aria")}>
   <header class="gallery-head section-pad">
-    <p class="label gallery-kicker reveal">Field notes</p>
-    <p class="gallery-line serif reveal">Some of the animals waiting for us.</p>
+    <p class="label gallery-kicker reveal">{t("gallery.kicker")}</p>
+    <p class="gallery-line serif reveal">{t("gallery.line")}</p>
   </header>
 
   <div class="gallery-strip">

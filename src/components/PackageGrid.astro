@@ -1,12 +1,21 @@
 ---
 import PackageCard from "./PackageCard.astro";
-import { trips } from "../data/trips";
+import { getTrips } from "../data/trips";
+import { useT, type Locale } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useT(locale);
+const trips = getTrips(locale);
 ---
 
-<section class="packages section-pad" id="expeditions" aria-label="Expeditions">
+<section class="packages section-pad" id="expeditions" aria-label={t("packages.aria")}>
   <header class="packages-head">
-    <h2 class="packages-title serif reveal">Wildlife<br /><em>expeditions</em></h2>
-    <p class="packages-note label reveal">{trips.length} journeys · Nature &amp; conservation</p>
+    <h2 class="packages-title serif reveal" set:html={t("packages.title")} />
+    <p class="packages-note label reveal">{t("packages.note", { n: trips.length })}</p>
   </header>
 
   <div class="packages-grid">

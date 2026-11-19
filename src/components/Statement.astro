@@ -1,13 +1,17 @@
 ---
 // The "breath" between hero and packages: one editorial line, revealed word by word.
+import { useT, type Locale } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const t = useT(Astro.props.locale);
 ---
 
-<section class="statement section-pad" aria-label="Our approach">
-  <p class="statement-kicker label reveal">A different way to travel</p>
-  <p class="statement-line serif" data-split-words>
-    We travel slowly, in small groups, guided by the people who call each place
-    home — not to see the world, but to understand it.
-  </p>
+<section class="statement section-pad" aria-label={t("statement.aria")}>
+  <p class="statement-kicker label reveal">{t("statement.kicker")}</p>
+  <p class="statement-line serif" data-split-words>{t("statement.line")}</p>
 </section>
 
 <style>

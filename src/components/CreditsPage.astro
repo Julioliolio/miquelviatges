@@ -1,0 +1,96 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "./Nav.astro";
+import Footer from "./Footer.astro";
+import credits from "../data/photo-credits.json";
+import { locales, routes, useT, type Alternates, type Locale } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useT(locale);
+const alternates = Object.fromEntries(locales.map((l) => [l, routes.credits(l)])) as Alternates;
+const list = [...new Map(Object.values(credits).map((c) => [c.page, c])).values()];
+---
+
+<Layout
+  title={t("meta.creditsTitle")}
+  description={t("meta.creditsDescription")}
+  locale={locale}
+  alternates={alternates}
+>
+  <Nav locale={locale} alternates={alternates} />
+  <main class="credits section-pad">
+    <p class="label credits-kicker">{t("credits.kicker")}</p>
+    <h1 class="credits-title serif">{t("credits.title")}</h1>
+    <p class="credits-intro">{t("credits.intro")}</p>
+    <ul class="credits-list">
+      {
+        list.map((c) => (
+          <li>
+            <a href={c.page} rel="noopener" target="_blank">{c.title.replace(/^File:/, "")}</a>
+            <span>
+              {c.artist && <>{c.artist} · </>}
+              {c.license}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+  <Footer locale={locale} />
+</Layout>
+
+<script>
+  const nav = document.getElementById("site-nav");
+  nav?.classList.add("scrolled");
+</script>
+
+<style>
+  .credits {
+    padding-block: 8rem 6rem;
+    max-width: 60rem;
+  }
+
+  .credits-kicker {
+    color: var(--terracotta);
+    margin-bottom: 1.2rem;
+  }
+
+  .credits-title {
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .credits-intro {
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin-bottom: 3rem;
+  }
+
+  .credits-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .credits-list li {
+    display: grid;
+    gap: 0.15rem;
+    padding-block: 0.9rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.9375rem;
+  }
+
+  .credits-list a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  .credits-list span {
+    color: var(--ink-soft);
+    font-size: 0.8125rem;
+  }
+</style>

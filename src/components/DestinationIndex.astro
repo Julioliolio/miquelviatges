@@ -2,19 +2,28 @@
 // Typographic index of all expeditions. On pointer devices, hovering a row
 // summons a floating photo that trails the cursor (classic awwwards pattern).
 import { Image } from "astro:assets";
-import { trips, tripUrl } from "../data/trips";
+import { getTrips, tripUrl } from "../data/trips";
+import { useT, type Locale } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useT(locale);
+const trips = getTrips(locale);
 ---
 
-<section class="index section-pad" aria-label="Expedition index" data-index>
+<section class="index section-pad" aria-label={t("index.aria")} data-index>
   <header class="index-head">
-    <p class="label index-kicker reveal">Quick index</p>
-    <h2 class="index-title serif reveal">Every journey, <em>at a glance</em></h2>
+    <p class="label index-kicker reveal">{t("index.kicker")}</p>
+    <h2 class="index-title serif reveal" set:html={t("index.title")} />
   </header>
 
   <div class="index-list">
     {
       trips.map((trip, i) => (
-        <a href={tripUrl(trip.slug)} class="index-row" data-index-row={i}>
+        <a href={tripUrl(trip)} class="index-row" data-index-row={i}>
           <span class="index-num label">{String(i + 1).padStart(2, "0")}</span>
           <span class="index-name serif">
             {trip.country}

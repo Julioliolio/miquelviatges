@@ -1,15 +1,40 @@
 ---
 // Sticky nav: transparent over the hero, cream + hairline once scrolled.
-import { homeUrl } from "../data/site";
+import { locales, routes, useT, localeNames, type Alternates, type Locale } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+  alternates: Alternates;
+}
+
+const { locale, alternates } = Astro.props;
+const t = useT(locale);
+const home = routes.home(locale);
 ---
 
 <header class="nav" id="site-nav">
   <nav class="nav-inner section-pad">
-    <a href={`${homeUrl}#expeditions`} class="label nav-link">Expeditions</a>
-    <a href={homeUrl} class="wordmark serif" aria-label="Tramuntana — home" data-nav-wordmark>Tramuntana</a>
+    <a href={`${home}#expeditions`} class="label nav-link">{t("nav.expeditions")}</a>
+    <a href={home} class="wordmark serif" aria-label={t("nav.home")} data-nav-wordmark>Tramuntana</a>
     <div class="nav-right">
-      <a href={`${homeUrl}#philosophy`} class="label nav-link">The project</a>
-      <span class="label lang" aria-hidden="true">EN</span>
+      <a href={`${home}#philosophy`} class="label nav-link">{t("nav.project")}</a>
+      <ul class="lang label" aria-label={t("nav.language")}>
+        {
+          locales.map((l) => (
+            <li>
+              <a
+                href={alternates[l]}
+                hreflang={l}
+                lang={l}
+                title={localeNames[l]}
+                aria-current={l === locale ? "true" : undefined}
+              >
+                {l.toUpperCase()}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </nav>
 </header>
@@ -81,10 +106,37 @@ import { homeUrl } from "../data/site";
   }
 
   .lang {
+    list-style: none;
+    padding: 0.15rem;
+    display: flex;
     border: 1px solid currentColor;
     border-radius: 999px;
-    padding: 0.2rem 0.55rem;
-    opacity: 0.85;
+  }
+
+  .lang a {
+    display: block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    opacity: 0.7;
+    transition:
+      opacity 0.3s var(--ease-out),
+      background-color 0.3s var(--ease-out),
+      color 0.3s var(--ease-out);
+  }
+
+  .lang a:hover {
+    opacity: 1;
+  }
+
+  .lang a[aria-current] {
+    opacity: 1;
+    background: var(--cream);
+    color: var(--ink);
+  }
+
+  .nav.scrolled .lang a[aria-current] {
+    background: var(--ink);
+    color: var(--cream);
   }
 
   @media (max-width: 640px) {

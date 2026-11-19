@@ -1,16 +1,18 @@
 ---
 import { Image } from "astro:assets";
 import { tripUrl, type Trip } from "../data/trips";
+import { useT } from "../i18n/ui";
 
 interface Props {
   trip: Trip;
 }
 
 const { trip } = Astro.props;
+const t = useT(trip.locale);
 ---
 
 <article class="card reveal">
-  <a href={tripUrl(trip.slug)} class="card-link" aria-label={`${trip.country} — ${trip.title}`}>
+  <a href={tripUrl(trip)} class="card-link" aria-label={`${trip.country} — ${trip.title}`}>
     <div class="card-media">
       <div class="card-parallax" data-parallax>
         <Image
@@ -25,7 +27,7 @@ const { trip } = Astro.props;
     <div class="card-body">
       <div class="card-meta label">
         <span class="card-country">{trip.country}</span>
-        <span class="card-dates">Best · {trip.seasonShort}</span>
+        <span class="card-dates">{t("card.best")} · {trip.seasonShort}</span>
       </div>
       <h3 class="card-title serif">
         {trip.title}

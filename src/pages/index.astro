@@ -1,31 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Nav from "../components/Nav.astro";
-import Hero from "../components/Hero.astro";
-import Statement from "../components/Statement.astro";
-import PackageGrid from "../components/PackageGrid.astro";
-import DestinationIndex from "../components/DestinationIndex.astro";
-import Philosophy from "../components/Philosophy.astro";
-import ExpandingGallery from "../components/ExpandingGallery.astro";
-import Footer from "../components/Footer.astro";
+import HomePage from "../components/HomePage.astro";
 ---
 
-<Layout
-  title="Tramuntana — Immersive travel expeditions"
-  description="Small-group expeditions to remote places, guided by the people who live there."
->
-  <Nav />
-  <main>
-    <Hero />
-    <Statement />
-    <PackageGrid />
-    <DestinationIndex />
-    <Philosophy />
-    <ExpandingGallery />
-  </main>
-  <Footer />
-</Layout>
-
-<script>
-  import "../scripts/animations";
-</script>
+<HomePage locale="en" />

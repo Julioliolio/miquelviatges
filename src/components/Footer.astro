@@ -1,43 +1,48 @@
 ---
 // Dark closing band: newsletter mock + footer meta.
-import { homeUrl } from "../data/site";
+import { routes, useT, type Locale } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useT(locale);
 ---
 
-<footer class="footer" aria-label="Newsletter and site information">
+<footer class="footer" aria-label={t("footer.aria")}>
   <div class="footer-inner section-pad">
     <div class="footer-news">
-      <h2 class="footer-title serif">
-        Hear about the next<br /><em>expedition first.</em>
-      </h2>
+      <h2 class="footer-title serif" set:html={t("footer.title")} />
       <form class="footer-form" data-newsletter>
         <div class="footer-field">
           <input
             type="email"
             name="email"
-            placeholder="your@email.com"
-            aria-label="Email address"
+            placeholder={t("footer.placeholder")}
+            aria-label={t("footer.emailLabel")}
             required
           />
-          <button type="submit" class="label" data-magnetic>Join</button>
+          <button type="submit" class="label" data-magnetic>{t("footer.join")}</button>
         </div>
         <label class="footer-consent">
           <input type="checkbox" required />
-          <span>I have read and accept the <a href="#">privacy policy</a></span>
+          <span>{t("footer.consent")} <a href="#">{t("footer.privacy")}</a></span>
         </label>
-        <p class="footer-thanks label" hidden>Thank you — talk soon.</p>
+        <p class="footer-thanks label" hidden>{t("footer.thanks")}</p>
       </form>
     </div>
 
     <div class="footer-meta">
       <div class="footer-col">
-        <p class="label footer-head">Follow us</p>
+        <p class="label footer-head">{t("footer.follow")}</p>
         <a href="#" class="footer-link">Instagram</a>
         <a href="#" class="footer-link">YouTube</a>
         <a href="#" class="footer-link">TikTok</a>
       </div>
       <div class="footer-col">
-        <p class="label footer-head">Questions?</p>
-        <a href="#" class="footer-link">Frequently asked questions</a>
+        <p class="label footer-head">{t("footer.questions")}</p>
+        <a href="#" class="footer-link">{t("footer.faq")}</a>
         <a href="mailto:hello@example.com" class="footer-link">hello@example.com</a>
       </div>
     </div>
@@ -45,7 +50,7 @@ import { homeUrl } from "../data/site";
 
   <div class="footer-legal section-pad label">
     <span>Tramuntana Expedicions S.L.</span>
-    <span>©2026 · <a href={`${homeUrl}credits/`}>Photo credits</a></span>
+    <span>©2026 · <a href={routes.credits(locale)}>{t("footer.credits")}</a></span>
   </div>
 </footer>
 

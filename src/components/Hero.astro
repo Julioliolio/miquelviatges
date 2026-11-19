@@ -1,7 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import { heroSlides } from "../data/trips";
+import { useT, type Locale } from "../i18n/ui";
 
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useT(locale);
 const brand = "TRAMUNTANA";
 ---
 
@@ -9,7 +16,7 @@ const brand = "TRAMUNTANA";
   <div class="hero-frame" data-hero-frame>
     <div class="hero-media" aria-hidden="true">
     {
-      heroSlides.map((slide, i) => (
+      heroSlides(locale).map((slide, i) => (
         <div class={`hero-slide${i === 0 ? " active" : ""}`}>
           <Image
             src={slide.src}
@@ -25,11 +32,9 @@ const brand = "TRAMUNTANA";
   </div>
 
   <div class="hero-content section-pad">
-    <p class="hero-tag serif">
-      Immersive journeys to places<br />that don&rsquo;t fit on postcards.
-    </p>
+    <p class="hero-tag serif" set:html={t("hero.tagline")} />
     <a class="hero-cta label" href="#expeditions" data-magnetic>
-      See the expeditions
+      {t("hero.cta")}
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
         <path d="M7 1v11M2.5 7.5 7 12l4.5-4.5" stroke="currentColor" stroke-width="1.5" />
       </svg>
