@@ -1,29 +1,35 @@
 ---
 // Horizontal expanding-card deck: hovered photo widens, siblings compress.
 // On touch screens it becomes a snap-scrolling strip.
-const u = (id: string) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1100&q=80`;
+import { Image } from "astro:assets";
+import { trips } from "../data/trips";
 
+const [palau, indonesia, honduras, philippines] = trips;
 const shots = [
-  { image: u("photo-1519681393784-d120267933ba"), caption: "Night camp, 4,100 m" },
-  { image: u("photo-1476514525535-07fb3b4ae5f1"), caption: "The morning crossing" },
-  { image: u("photo-1509316785289-025f5b846b35"), caption: "Dust roads" },
-  { image: u("photo-1526392060635-9d6019884377"), caption: "Above the clouds" },
-  { image: u("photo-1533105079780-92b9be482077"), caption: "Blue hour, old port" },
+  { photo: palau.stages[2].photo, caption: "Golden jellyfish" },
+  { photo: indonesia.stages[0].photo, caption: "Bornean orangutan" },
+  { photo: honduras.stages[1].photo, caption: "Whale shark" },
+  { photo: philippines.stages[1].photo, caption: "Philippine tarsier" },
+  { photo: indonesia.stages[2].photo, caption: "Komodo dragon" },
 ];
 ---
 
-<section class="gallery" aria-label="Moments from the field">
+<section class="gallery" aria-label="Wildlife of our expeditions">
   <header class="gallery-head section-pad">
     <p class="label gallery-kicker reveal">Field notes</p>
-    <p class="gallery-line serif reveal">Moments our travellers brought home.</p>
+    <p class="gallery-line serif reveal">Some of the animals waiting for us.</p>
   </header>
 
   <div class="gallery-strip">
     {
       shots.map((shot) => (
         <figure class="gallery-item">
-          <img src={shot.image} alt={shot.caption} loading="lazy" />
+          <Image
+            src={shot.photo.src}
+            alt={shot.photo.alt}
+            widths={[640, 1100]}
+            sizes="(max-width: 760px) 74vw, 40vw"
+          />
           <figcaption class="label">{shot.caption}</figcaption>
         </figure>
       ))

@@ -1,5 +1,6 @@
 ---
 // Dark closing band: newsletter mock + footer meta.
+import { homeUrl } from "../data/site";
 ---
 
 <footer class="footer" aria-label="Newsletter and site information">
@@ -44,7 +45,7 @@
 
   <div class="footer-legal section-pad label">
     <span>Tramuntana Expedicions S.L.</span>
-    <span>©2026 · All rights reserved</span>
+    <span>©2026 · <a href={`${homeUrl}credits/`}>Photo credits</a></span>
   </div>
 </footer>
 

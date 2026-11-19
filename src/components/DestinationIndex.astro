@@ -1,9 +1,8 @@
 ---
 // Typographic index of all expeditions. On pointer devices, hovering a row
 // summons a floating photo that trails the cursor (classic awwwards pattern).
-import { packages } from "../data/packages";
-
-const preview = (img: string) => img.replace("w=1400", "w=640");
+import { Image } from "astro:assets";
+import { trips, tripUrl } from "../data/trips";
 ---
 
 <section class="index section-pad" aria-label="Expedition index" data-index>
@@ -14,15 +13,15 @@ const preview = (img: string) => img.replace("w=1400", "w=640");
 
   <div class="index-list">
     {
-      packages.map((pkg, i) => (
-        <a href="#" class="index-row" data-index-row={i}>
+      trips.map((trip, i) => (
+        <a href={tripUrl(trip.slug)} class="index-row" data-index-row={i}>
           <span class="index-num label">{String(i + 1).padStart(2, "0")}</span>
           <span class="index-name serif">
-            {pkg.country}
-            <em> — {pkg.title}</em>
+            {trip.country}
+            <em> — {trip.title}</em>
           </span>
-          <span class="index-dates label">{pkg.dates}</span>
-          <span class="index-price">{pkg.price}</span>
+          <span class="index-dates label">{trip.seasonShort}</span>
+          <span class="index-price">{trip.duration}</span>
         </a>
       ))
     }
@@ -30,8 +29,8 @@ const preview = (img: string) => img.replace("w=1400", "w=640");
 
   <div class="index-preview" data-index-preview aria-hidden="true">
     {
-      packages.map((pkg, i) => (
-        <img src={preview(pkg.image)} alt="" data-preview-img={i} loading="lazy" />
+      trips.map((trip, i) => (
+        <Image src={trip.stages[0].photo.src} alt="" width={640} data-preview-img={i} loading="lazy" />
       ))
     }
   </div>

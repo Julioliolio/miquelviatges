@@ -1,19 +1,19 @@
 ---
 import PackageCard from "./PackageCard.astro";
-import { packages } from "../data/packages";
+import { trips } from "../data/trips";
 ---
 
-<section class="packages section-pad" id="expeditions" aria-label="Upcoming expeditions">
+<section class="packages section-pad" id="expeditions" aria-label="Expeditions">
   <header class="packages-head">
-    <h2 class="packages-title serif reveal">Upcoming<br /><em>expeditions</em></h2>
-    <p class="packages-note label reveal">{packages.length} journeys · 2026 — 2027</p>
+    <h2 class="packages-title serif reveal">Wildlife<br /><em>expeditions</em></h2>
+    <p class="packages-note label reveal">{trips.length} journeys · Nature &amp; conservation</p>
   </header>
 
   <div class="packages-grid">
     {
-      packages.map((pkg) => (
+      trips.map((trip) => (
         <div class="packages-cell">
-          <PackageCard pkg={pkg} />
+          <PackageCard trip={trip} />
         </div>
       ))
     }

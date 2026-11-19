@@ -1,31 +1,34 @@
 ---
-import type { TravelPackage } from "../data/packages";
+import { Image } from "astro:assets";
+import { tripUrl, type Trip } from "../data/trips";
 
 interface Props {
-  pkg: TravelPackage;
+  trip: Trip;
 }
 
-const { pkg } = Astro.props;
-const soldOut = pkg.availability === "soldout";
+const { trip } = Astro.props;
 ---
 
-<article class:list={["card", "reveal", { soldout: soldOut }]}>
-  <a href="#" class="card-link" aria-label={`${pkg.country} — ${pkg.title}`}>
+<article class="card reveal">
+  <a href={tripUrl(trip.slug)} class="card-link" aria-label={`${trip.country} — ${trip.title}`}>
     <div class="card-media">
       <div class="card-parallax" data-parallax>
-        <img src={pkg.image} alt={pkg.alt} loading="lazy" />
+        <Image
+          src={trip.hero.src}
+          alt={trip.hero.alt}
+          widths={[640, 960, 1400]}
+          sizes="(max-width: 760px) 100vw, 50vw"
+        />
       </div>
-      <span class:list={["card-tag", "label", pkg.availability]}>
-        {pkg.availabilityLabel}
-      </span>
+      <span class="card-tag label">{trip.duration}</span>
     </div>
     <div class="card-body">
       <div class="card-meta label">
-        <span class="card-country">{pkg.country}</span>
-        <span class="card-dates">{pkg.dates}</span>
+        <span class="card-country">{trip.country}</span>
+        <span class="card-dates">Best · {trip.seasonShort}</span>
       </div>
       <h3 class="card-title serif">
-        {pkg.title}
+        {trip.title}
         <svg
           class="card-arrow"
           width="20"
@@ -37,7 +40,8 @@ const soldOut = pkg.availability === "soldout";
           <path d="M4 16 16 4M7 4h9v9" stroke="currentColor" stroke-width="1.5" />
         </svg>
       </h3>
-      <p class="card-price">from <strong>{pkg.price}</strong> per person</p>
+      <p class="card-route">{trip.route}</p>
+      <p class="card-summary">{trip.summary}</p>
     </div>
   </a>
 </article>
@@ -81,20 +85,6 @@ const soldOut = pkg.availability === "soldout";
     color: var(--ink);
   }
 
-  .card-tag.few {
-    background: var(--terracotta);
-    color: var(--cream);
-  }
-
-  .card-tag.soldout {
-    background: var(--ink);
-    color: var(--cream);
-  }
-
-  .soldout .card-media {
-    filter: saturate(0.35);
-  }
-
   .card-body {
     padding-top: 1.1rem;
   }
@@ -133,14 +123,16 @@ const soldOut = pkg.availability === "soldout";
     transform: translate(0, 0);
   }
 
-  .card-price {
+  .card-route {
     margin-top: 0.5rem;
     font-size: 0.9375rem;
-    color: var(--ink-soft);
+    font-weight: 600;
   }
 
-  .card-price strong {
-    color: var(--ink);
-    font-weight: 600;
+  .card-summary {
+    margin-top: 0.35rem;
+    font-size: 0.9375rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
   }
 </style>

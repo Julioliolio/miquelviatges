@@ -1,5 +1,6 @@
 ---
-import { heroImages } from "../data/packages";
+import { Image } from "astro:assets";
+import { heroSlides } from "../data/trips";
 
 const brand = "TRAMUNTANA";
 ---
@@ -8,9 +9,15 @@ const brand = "TRAMUNTANA";
   <div class="hero-frame" data-hero-frame>
     <div class="hero-media" aria-hidden="true">
     {
-      heroImages.map((img, i) => (
+      heroSlides.map((slide, i) => (
         <div class={`hero-slide${i === 0 ? " active" : ""}`}>
-          <img src={img.image} alt="" loading={i === 0 ? "eager" : "lazy"} />
+          <Image
+            src={slide.src}
+            alt=""
+            widths={[960, 1600, 2400]}
+            sizes="100vw"
+            loading={i === 0 ? "eager" : "lazy"}
+          />
         </div>
       ))
     }

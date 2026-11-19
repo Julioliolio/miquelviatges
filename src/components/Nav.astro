@@ -1,13 +1,14 @@
 ---
 // Sticky nav: transparent over the hero, cream + hairline once scrolled.
+import { homeUrl } from "../data/site";
 ---
 
 <header class="nav" id="site-nav">
   <nav class="nav-inner section-pad">
-    <a href="#expeditions" class="label nav-link">Expeditions</a>
-    <a href="#top" class="wordmark serif" aria-label="Tramuntana — home" data-nav-wordmark>Tramuntana</a>
+    <a href={`${homeUrl}#expeditions`} class="label nav-link">Expeditions</a>
+    <a href={homeUrl} class="wordmark serif" aria-label="Tramuntana — home" data-nav-wordmark>Tramuntana</a>
     <div class="nav-right">
-      <a href="#philosophy" class="label nav-link">The project</a>
+      <a href={`${homeUrl}#philosophy`} class="label nav-link">The project</a>
       <span class="label lang" aria-hidden="true">EN</span>
     </div>
   </nav>
