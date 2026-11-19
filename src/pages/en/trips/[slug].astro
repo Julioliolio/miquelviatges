@@ -3,7 +3,7 @@ import TripPage from "../../../components/TripPage.astro";
 import { getTrips } from "../../../data/trips";
 
 export function getStaticPaths() {
-  const trips = getTrips("es");
+  const trips = getTrips("en");
   return trips.map((trip, i) => ({
     params: { slug: trip.slug },
     props: { trip, next: trips[(i + 1) % trips.length] },

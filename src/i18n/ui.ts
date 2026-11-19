@@ -1,8 +1,9 @@
 /** Site root including the GitHub Pages base path, always ending in "/". */
 const homeUrl = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
-export const locales = ["en", "es"] as const;
+export const locales = ["es", "en"] as const;
 export type Locale = (typeof locales)[number];
+export const defaultLocale: Locale = "es";
 
 export const localeNames: Record<Locale, string> = { en: "English", es: "Español" };
 
@@ -190,7 +191,8 @@ export function useT(locale: Locale) {
     ui[locale][key].replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));
 }
 
-const prefix = (locale: Locale) => (locale === "en" ? homeUrl : `${homeUrl}es/`);
+const prefix = (locale: Locale) =>
+  locale === defaultLocale ? homeUrl : `${homeUrl}${locale}/`;
 
 export const routes = {
   home: (locale: Locale) => prefix(locale),
